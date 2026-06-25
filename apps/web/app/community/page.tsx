@@ -1,0 +1,1 @@
+import {CommunityBlocks,PageTitle} from '@/components/UI';export default function Community(){return <><PageTitle kicker='المجتمع' title='المدرج يتكلم' sub='توقعات، استطلاعات، مزاج جمهور، تعليقات، وترتيب أفضل المشجعين.'/><CommunityBlocks/></>}

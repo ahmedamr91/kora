@@ -1,0 +1,1 @@
+import {CommunityBlocks,PageTitle} from '@/components/UI';export default function Predictions(){return <><PageTitle kicker='التوقعات' title='Prediction League' sub='مسابقة توقعات أسبوعية مع نقاط وشارات وترتيب جماهيري.'/><CommunityBlocks/></>}

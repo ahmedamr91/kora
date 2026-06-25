@@ -1,0 +1,10 @@
+name = "madraj-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+[vars]
+ALLOWED_ORIGIN = "*"
+
+# Add real secrets with:
+# npx wrangler secret put FOOTBALL_DATA_API_KEY
+# npx wrangler secret put OPENAI_API_KEY

@@ -1,0 +1,1 @@
+import {PageTitle,TransferList} from '@/components/UI';export default function Transfers(){return <><PageTitle kicker='الانتقالات' title='Transfer Radar' sub='نسبة ثقة، مصدر، سبب تكتيكي، ورأي الجمهور بدلاً من خبر إشاعة فقط.'/><TransferList/></>}

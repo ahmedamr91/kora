@@ -1,0 +1,1 @@
+import {PageTitle} from '@/components/UI';export default function Profile(){return <><PageTitle kicker='حسابي' title='تجربتي الشخصية' sub='اختيار الفرق واللاعبين المفضلين لتخصيص الصفحة الرئيسية.'/><div className='glass card p-6'><h2 className='text-3xl font-black'>قريباً: تخصيص كامل</h2><p className='mt-2 text-white/55'>الفرق المفضلة، التنبيهات، التوقعات، والشارات.</p></div></>}

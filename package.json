@@ -1,0 +1,20 @@
+{
+  "name": "madraj-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @madraj/web",
+    "dev:web": "npm run dev -w @madraj/web",
+    "build": "npm run build -w @madraj/web",
+    "start": "npm run start -w @madraj/web",
+    "dev:api": "npm run dev -w @madraj/api",
+    "deploy:api": "npm run deploy -w @madraj/api"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
