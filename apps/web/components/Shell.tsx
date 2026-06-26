@@ -19,22 +19,24 @@ export function Logo() {
   return (
     <Link href="/" className="brand-logo group" aria-label="مدرج">
       <span className="logo-emblem" aria-hidden="true">
-        <svg viewBox="0 0 64 64" role="img">
+        <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
           <defs>
-            <linearGradient id="modarajLogoGradient" x1="8" x2="58" y1="7" y2="58" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#22e6a8" />
-              <stop offset="1" stopColor="#6ee7f9" />
+            <linearGradient id="modarajMark" x1="10" x2="54" y1="8" y2="56" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#20e6a4" />
+              <stop offset="0.55" stopColor="#7cf7d0" />
+              <stop offset="1" stopColor="#38bdf8" />
             </linearGradient>
           </defs>
-          <rect x="6" y="6" width="52" height="52" rx="17" fill="url(#modarajLogoGradient)" />
-          <path d="M18 39.5c8.3-8.2 19.7-8.2 28 0" fill="none" stroke="#061019" strokeWidth="5" strokeLinecap="round" />
-          <path d="M22 24h20M22 31h20" stroke="#061019" strokeWidth="5" strokeLinecap="round" />
-          <circle cx="32" cy="46" r="3.4" fill="#061019" />
+          <rect x="7" y="7" width="50" height="50" rx="18" fill="rgba(3,7,18,.66)" />
+          <path d="M19 42c4.9-8.4 21.1-8.4 26 0" fill="none" stroke="url(#modarajMark)" strokeWidth="5.4" strokeLinecap="round" />
+          <path d="M21 25h22M21 32h18" stroke="url(#modarajMark)" strokeWidth="5.4" strokeLinecap="round" />
+          <circle cx="45" cy="32" r="3.2" fill="url(#modarajMark)" />
+          <path d="M32 15v8" stroke="rgba(255,255,255,.52)" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </span>
       <span className="leading-none">
-        <b className="block text-[1.08rem] font-black tracking-[-.03em] md:text-[1.22rem]">مدرج</b>
-        <small className="mt-1 block text-[10px] font-bold text-slate-400 md:text-[11px]">ذكاء كرة القدم</small>
+        <b className="brand-word">مدرج</b>
+        <small className="brand-subtitle">منصة ذكاء كرة القدم</small>
       </span>
     </Link>
   );
@@ -44,8 +46,8 @@ export default function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#070b12]/82 backdrop-blur-2xl">
-        <div className="container flex h-[72px] items-center gap-4">
+      <header className="site-header">
+        <div className="container flex h-[70px] items-center gap-4">
           <Logo />
           <nav className="desktop-only flex flex-1 items-center justify-center gap-1">
             {nav.map(([href, label, Icon]) => (
