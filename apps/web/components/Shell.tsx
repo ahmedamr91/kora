@@ -2,7 +2,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Brain, CalendarDays, Flame, Home, Menu, Search, Shield, Trophy, UserRound } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import {
+  Brain,
+  CalendarDays,
+  Flame,
+  HelpCircle,
+  Home,
+  Menu,
+  Moon,
+  Search,
+  Settings,
+  Shield,
+  Star,
+  Trophy,
+  UserRound,
+  X,
+} from 'lucide-react';
 
 const nav = [
   ['/', 'الرئيسية', Home],
@@ -13,6 +29,11 @@ const nav = [
   ['/history', 'الذاكرة', Trophy],
   ['/ai', 'الذكاء', Brain],
   ['/community', 'المجتمع', Menu],
+] as const;
+
+const drawerExtras = [
+  ['/search', 'البحث المتقدم', Search],
+  ['/profile', 'المفضلة', Star],
 ] as const;
 
 export function Logo() {
@@ -42,8 +63,68 @@ export function Logo() {
   );
 }
 
+function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    document.body.classList.toggle('drawer-open', open);
+    return () => document.body.classList.remove('drawer-open');
+  }, [open]);
+
+  return (
+    <div className={`mobile-drawer-wrap ${open ? 'open' : ''}`} aria-hidden={!open}>
+      <button className="mobile-drawer-backdrop" onClick={onClose} aria-label="إغلاق القائمة" />
+      <aside className="mobile-drawer" role="dialog" aria-modal="true" aria-label="قائمة مدرج">
+        <div className="drawer-top">
+          <Logo />
+          <button className="drawer-close" onClick={onClose} aria-label="إغلاق القائمة">
+            <X size={18} />
+          </button>
+        </div>
+
+        <div className="drawer-profile">
+          <div>
+            <b>أهلاً بك في مدرج</b>
+            <span>اختر فريقك المفضل قريباً لتخصيص التجربة.</span>
+          </div>
+          <span className="drawer-profile-mark">M</span>
+        </div>
+
+        <nav className="drawer-nav" aria-label="روابط الهاتف">
+          {[...nav, ...drawerExtras].map(([href, label, Icon]) => {
+            const active = pathname === href;
+            return (
+              <Link key={href} href={href} onClick={onClose} className={`drawer-link ${active ? 'active' : ''}`}>
+                <Icon size={18} />
+                <span>{label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="drawer-actions">
+          <button type="button" className="drawer-action">
+            <Moon size={17} />
+            <span>الوضع الداكن</span>
+          </button>
+          <button type="button" className="drawer-action">
+            <Settings size={17} />
+            <span>الإعدادات</span>
+          </button>
+          <button type="button" className="drawer-action">
+            <HelpCircle size={17} />
+            <span>المساعدة</span>
+          </button>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
 export default function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <>
       <header className="site-header">
@@ -57,13 +138,21 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
           <Link href="/search" className="chip desktop-only"><Search size={15} />بحث</Link>
+          <button type="button" className="mobile-menu-button mobile-only" onClick={() => setDrawerOpen(true)} aria-label="فتح القائمة">
+            <Menu size={20} />
+          </button>
         </div>
       </header>
+
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
+
       <main className="container fade py-7 pb-28">{children}</main>
-      <nav className="mobile-nav fixed bottom-3 left-3 right-3 z-50 grid-cols-5 gap-2 rounded-[26px] border border-white/10 bg-[#070b12]/90 p-2 backdrop-blur-2xl lg:hidden">
+
+      <nav className="mobile-nav fixed bottom-3 left-3 right-3 z-40 grid-cols-5 gap-1.5 rounded-[26px] border border-white/10 bg-[#070b12]/90 p-1.5 backdrop-blur-2xl lg:hidden" aria-label="التنقل السريع">
         {nav.slice(0, 5).map(([href, label, Icon]) => (
-          <Link key={href} href={href} className={`grid place-items-center rounded-2xl py-2 text-[11px] font-bold ${pathname === href ? 'bg-emerald-300 text-slate-950' : 'text-slate-400'}`}>
-            <Icon size={18} />{label}
+          <Link key={href} href={href} className={`mobile-nav-item ${pathname === href ? 'active' : ''}`}>
+            <Icon size={18} />
+            <span>{label}</span>
           </Link>
         ))}
       </nav>
