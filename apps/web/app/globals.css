@@ -150,3 +150,75 @@ a { color: inherit; text-decoration: none; }
   .card { border-radius: 22px; }
   .hero-title { font-size: clamp(2.35rem, 12vw, 3.2rem); }
 }
+
+/* Modaraj refinement: safer premium identity updates */
+h1, h2, h3, h4, .hero-title { text-wrap: balance; }
+.hero-title {
+  font-size: clamp(2rem, 4.8vw, 4.55rem);
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  min-width: max-content;
+}
+.logo-emblem {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 18px 48px rgba(34,230,168,.18), inset 0 1px 0 rgba(255,255,255,.20);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.brand-logo:hover .logo-emblem {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 22px 60px rgba(34,230,168,.24), inset 0 1px 0 rgba(255,255,255,.20);
+}
+.logo-emblem svg { width: 40px; height: 40px; display:block; }
+
+.nav-link { font-size: .84rem; padding: .58rem .72rem; }
+
+.calendar-select {
+  display: grid;
+  min-height: 128px;
+  align-content: center;
+  gap: .28rem;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.032));
+  padding: 1rem;
+  text-align: center;
+  color: var(--text);
+  transition: .22s ease;
+}
+.calendar-select:hover { transform: translateY(-2px); border-color: rgba(34,230,168,.35); }
+.calendar-select.active {
+  background: linear-gradient(180deg, rgba(34,230,168,.18), rgba(34,230,168,.075));
+  border-color: rgba(34,230,168,.44);
+  box-shadow: 0 18px 48px rgba(34,230,168,.12);
+}
+.calendar-select small { color: var(--muted); font-weight: 700; }
+.calendar-select em {
+  margin-top: .45rem;
+  justify-self: center;
+  border-radius: 999px;
+  background: rgba(34,230,168,.12);
+  border: 1px solid rgba(34,230,168,.28);
+  color: var(--primary);
+  padding: .25rem .65rem;
+  font-style: normal;
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  .hero-title { font-size: clamp(2rem, 10vw, 2.85rem); }
+  .logo-emblem { width: 44px; height: 44px; border-radius: 16px; }
+  .logo-emblem svg { width: 36px; height: 36px; }
+}

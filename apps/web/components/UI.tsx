@@ -1,12 +1,15 @@
+'use client';
+
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { matches, players, transfers, stories, clubs, articles } from '@/lib/data';
+import { matches, matchDays, players, transfers, stories, clubs, articles } from '@/lib/data';
 import { Activity, ArrowLeft, Brain, CalendarDays, Flame, MessageCircle, ShieldCheck, Sparkles, Star, TrendingUp } from 'lucide-react';
 
 export function PageTitle({ kicker, title, sub }: { kicker: string; title: string; sub?: string }) {
   return (
     <div className="mb-7">
       <span className="chip active">{kicker}</span>
-      <h1 className="mt-4 text-4xl font-black tracking-[-.04em] md:text-6xl">{title}</h1>
+      <h1 className="mt-4 text-3xl font-black tracking-[-.035em] md:text-5xl">{title}</h1>
       {sub && <p className="mt-3 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">{sub}</p>}
     </div>
   );
@@ -17,7 +20,7 @@ export function Section({ title, sub, children }: { title: string; sub?: string;
     <section className="mt-9">
       <div className="mb-4 flex items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-black tracking-[-.035em] md:text-3xl">{title}</h2>
+          <h2 className="text-xl font-black tracking-[-.025em] md:text-2xl">{title}</h2>
           {sub && <p className="mt-1 text-sm text-slate-400 md:text-base">{sub}</p>}
         </div>
         <button className="chip desktop-only">عرض الكل <ArrowLeft size={14} /></button>
@@ -47,7 +50,7 @@ export function MatchCard({ m = matches[0], large = false }: { m?: any; large?: 
         <Team name={m.home} code={m.homeCode} />
         <div>
           <div className="text-3xl font-black md:text-4xl">{m.score}</div>
-          <div className="mt-2 text-xs text-slate-500">Match Center</div>
+          <div className="mt-2 text-xs text-slate-500">مركز المباراة</div>
         </div>
         <Team name={m.away} code={m.awayCode} />
       </div>
@@ -61,8 +64,8 @@ export function MatchCard({ m = matches[0], large = false }: { m?: any; large?: 
   );
 }
 
-export function MatchGrid() {
-  return <div className="grid gap-4 lg:grid-cols-3">{matches.map((m) => <MatchCard key={m.id} m={m} />)}</div>;
+export function MatchGrid({ items = matches }: { items?: typeof matches }) {
+  return <div className="grid gap-4 lg:grid-cols-3">{items.map((m) => <MatchCard key={m.id} m={m} />)}</div>;
 }
 
 export function DNABars({ data = matches[0].dna }: { data?: Record<string, number> }) {
@@ -89,7 +92,7 @@ export function PlayerGrid() {
           </div>
           <h3 className="mt-4 text-xl font-black">{p.name}</h3>
           <p className="text-sm text-slate-400">{p.club} · {p.pos}</p>
-          <div className="mt-5 flex items-center justify-between"><b className="text-3xl text-emerald-300">{p.rating}</b><span className="text-xs text-slate-500">Football Genome</span></div>
+          <div className="mt-5 flex items-center justify-between"><b className="text-3xl text-emerald-300">{p.rating}</b><span className="text-xs text-slate-500">بصمة اللاعب</span></div>
           <div className="mt-3 grid grid-cols-5 gap-1">
             {p.dna.map((d, i) => <div key={i} className="h-14 rounded-full bg-white/10" style={{ background: `linear-gradient(to top, rgba(34,230,168,.9) ${d}%, rgba(255,255,255,.08) ${d}%)` }} />)}
           </div>
@@ -149,12 +152,47 @@ export function Stories() {
 }
 
 export function CalendarDemo() {
-  const days = ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'];
+  const [selectedDate, setSelectedDate] = useState(matchDays[0].date);
+  const selectedDay = matchDays.find((d) => d.date === selectedDate) || matchDays[0];
+  const selectedMatches = useMemo(() => matches.filter((m) => m.date === selectedDate), [selectedDate]);
+
   return (
     <div className="glass card p-5">
-      <div className="mb-4 flex items-center justify-between"><h3 className="text-2xl font-black"><CalendarDays className="ml-2 inline" />تقويم المباريات</h3><span className="chip active">يونيو 2026</span></div>
-      <div className="grid grid-cols-7 gap-2 text-center text-xs text-slate-500 md:text-sm">{days.map((d) => <b key={d}>{d}</b>)}</div>
-      <div className="mt-2 grid grid-cols-7 gap-2">{Array.from({ length: 28 }).map((_, i) => <div className={`calendar-day ${[4, 11, 17, 22].includes(i) ? 'border-emerald-300/40 bg-emerald-300/10' : ''}`} key={i}><b>{i + 1}</b>{[4, 11, 17, 22].includes(i) && <p className="mt-3 rounded-full bg-emerald-300 px-2 py-1 text-[10px] font-black text-slate-950">3 مباريات</p>}</div>)}</div>
+      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h3 className="text-xl font-black md:text-2xl"><CalendarDays className="ml-2 inline text-emerald-300" />اختر يوم المباراة</h3>
+          <p className="mt-1 text-sm text-slate-400">اضغط على أي يوم لعرض مبارياته فقط.</p>
+        </div>
+        <span className="chip active">{selectedDay.weekday} · {selectedDay.date}</span>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-4">
+        {matchDays.map((day) => {
+          const count = matches.filter((m) => m.date === day.date).length;
+          const active = day.date === selectedDate;
+          return (
+            <button
+              key={day.date}
+              type="button"
+              onClick={() => setSelectedDate(day.date)}
+              className={`calendar-select ${active ? 'active' : ''}`}
+            >
+              <span className="text-xs text-slate-400">{day.label}</span>
+              <b className="text-2xl">{day.short}</b>
+              <small>{day.weekday}</small>
+              <em>{count} مباريات</em>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-6">
+        {selectedMatches.length ? (
+          <MatchGrid items={selectedMatches} />
+        ) : (
+          <div className="soft rounded-3xl p-6 text-center text-slate-400">لا توجد مباريات لهذا اليوم.</div>
+        )}
+      </div>
     </div>
   );
 }
@@ -163,7 +201,7 @@ export function IntelligenceRail() {
   return (
     <aside className="sidebar desktop-only space-y-4">
       <div className="glass card p-5"><h3 className="text-xl font-black"><Activity className="ml-2 inline text-emerald-300" />نبض المدرج</h3><div className="mt-4 space-y-3">{['ثقة جماهير الأهلي 91%', 'رادار صلاح +12%', 'الكلاسيكو الأكثر تداولاً'].map((x) => <div className="soft rounded-2xl p-3 text-sm text-slate-300" key={x}>{x}</div>)}</div></div>
-      <div className="glass card p-5"><h3 className="text-xl font-black"><ShieldCheck className="ml-2 inline text-cyan-300" />ميزات حصرية</h3><div className="mt-4 flex flex-wrap gap-2">{['Football Genome', 'Match Movie', 'Fan Mood', 'AI Scout', 'ذاكرة المباراة'].map((x) => <span className="chip" key={x}>{x}</span>)}</div></div>
+      <div className="glass card p-5"><h3 className="text-xl font-black"><ShieldCheck className="ml-2 inline text-cyan-300" />ميزات حصرية</h3><div className="mt-4 flex flex-wrap gap-2">{['بصمة اللاعب', 'فيلم المباراة', 'مزاج الجمهور', 'كشاف AI', 'ذاكرة المباراة'].map((x) => <span className="chip" key={x}>{x}</span>)}</div></div>
     </aside>
   );
 }
@@ -188,7 +226,7 @@ export function AIInsightPanel() {
   const m = matches[0];
   return (
     <div className="glass card p-5">
-      <div className="flex items-center justify-between"><b><Brain className="ml-2 inline text-emerald-300" />AI Match Pulse</b><span className="chip active">Live</span></div>
+      <div className="flex items-center justify-between"><b><Brain className="ml-2 inline text-emerald-300" />نبض المباراة بالذكاء</b><span className="chip active">مباشر</span></div>
       <p className="mt-4 text-sm leading-8 text-slate-300">{m.insight}</p>
       <div className="mt-4"><DNABars data={m.dna} /></div>
     </div>

@@ -1,13 +1,10 @@
-import { CalendarDemo, MatchGrid, PageTitle, Section } from '@/components/UI';
+import { CalendarDemo, PageTitle } from '@/components/UI';
 
 export default function MatchesPage() {
   return (
     <>
-      <PageTitle kicker="المباريات" title="تقويم وتايملاين المباريات" sub="صفحة مباريات حديثة تعتمد على التقويم، الفلاتر، وملخص AI لليوم." />
+      <PageTitle kicker="المباريات" title="تقويم المباريات" sub="اختر اليوم الذي تريده، وسيتم عرض مباريات هذا اليوم فقط مع إمكانية فتح مركز المباراة." />
       <CalendarDemo />
-      <Section title="مباريات مختارة">
-        <MatchGrid />
-      </Section>
     </>
   );
 }
