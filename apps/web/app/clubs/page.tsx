@@ -1,1 +1,5 @@
-import {ClubGrid,PageTitle} from '@/components/UI';export default function Clubs(){return <><PageTitle kicker='الأندية' title='Club Intelligence' sub='صفحات أندية تعرض DNA، مزاج الجمهور، آخر المباريات، الانتقالات، والذاكرة.'/><ClubGrid/></>}
+import { ClubGrid, PageTitle } from '@/components/UI';
+
+export default function ClubsPage() {
+  return <><PageTitle kicker="الأندية" title="لوحات الأندية" sub="مزاج الجمهور، DNA، الأداء، والهوية التكتيكية لكل نادٍ." /><ClubGrid /></>;
+}

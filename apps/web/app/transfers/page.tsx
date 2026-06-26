@@ -1,1 +1,5 @@
-import {PageTitle,TransferList} from '@/components/UI';export default function Transfers(){return <><PageTitle kicker='الانتقالات' title='Transfer Radar' sub='نسبة ثقة، مصدر، سبب تكتيكي، ورأي الجمهور بدلاً من خبر إشاعة فقط.'/><TransferList/></>}
+import { PageTitle, TransferList } from '@/components/UI';
+
+export default function TransfersPage() {
+  return <><PageTitle kicker="الانتقالات" title="رادار الانتقالات الذكي" sub="ثقة الصفقة، سبب الترشيح، وتحليل ملاءمة اللاعب للنادي." /><TransferList /></>;
+}

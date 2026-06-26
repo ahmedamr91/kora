@@ -1,1 +1,5 @@
-import {PageTitle,PlayerGrid} from '@/components/UI';export default function Players(){return <><PageTitle kicker='اللاعبون' title='Football Genome للاعبين' sub='تجربة مقارنة وفهم أسلوب اللاعب بصرياً بدلاً من الجداول التقليدية.'/><PlayerGrid/></>}
+import { PageTitle, PlayerGrid } from '@/components/UI';
+
+export default function PlayersPage() {
+  return <><PageTitle kicker="اللاعبون" title="Football Genome للاعبين" sub="بطاقات لاعبين تركز على الهوية والاتجاه وليس الأرقام فقط." /><PlayerGrid /></>;
+}

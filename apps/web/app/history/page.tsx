@@ -1,1 +1,5 @@
-import {PageTitle,Stories} from '@/components/UI';export default function History(){return <><PageTitle kicker='الذاكرة' title='Football Netflix' sub='كل مباراة تاريخية تتحول إلى قصة تفاعلية: سياق، لحظات، تشكيلات، فيديوهات، وتحليل AI.'/><Stories/></>}
+import { PageTitle, Stories } from '@/components/UI';
+
+export default function HistoryPage() {
+  return <><PageTitle kicker="الذاكرة" title="Football Memory" sub="قصص تاريخية، أفلام مباريات، وحكايات تجعل الذاكرة جزءاً من المنتج." /><Stories /></>;
+}
